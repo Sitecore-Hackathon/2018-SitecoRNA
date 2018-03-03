@@ -183,10 +183,12 @@ function visualize(stream) {
 $(document).ready(function() {
   $selRecording = $(selRecording);
   $txtEmail = $("#txtEmail");
+  $txtServiceUrl = $("#txtServiceUrl");
 
   $("#btnSubmitToSitecore").on("click", function () {
     var selectedRecordingIndex = $selRecording.val(); 
-    if (selectedRecordingIndex) {     
+    var serviceUrl = $txtServiceUrl.val();
+    if (selectedRecordingIndex && serviceUrl) {     
       var blob = audioBlobs[selectedRecordingIndex];   
       var email = $txtEmail.val();
 
@@ -197,7 +199,7 @@ $(document).ready(function() {
       console.log("Submitting to Sitecore...")
 
       $.ajax({
-        url :  "http://hackathon2018.sc/xconnectintegrations/speech/contactoccupation",
+        url :  serviceUrl,
         type: "POST",
         contentType: false,
         processData: false,
