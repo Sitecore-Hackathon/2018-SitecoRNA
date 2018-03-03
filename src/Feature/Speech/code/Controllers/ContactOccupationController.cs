@@ -40,7 +40,7 @@ namespace Rna.Feature.Speech.Controllers
             var subscriptionKey = Sitecore.Configuration.Settings.GetSetting("Microsoft.API.Speech.SubscriptionKey");
 
             var request = (HttpWebRequest)WebRequest.Create(serviceUri);
-            request.SendChunked = false;
+            request.SendChunked = true;
             request.Accept = @"application/json;text/xml";
             request.Method = "POST";
             request.ProtocolVersion = HttpVersion.Version11;
@@ -51,7 +51,10 @@ namespace Rna.Feature.Speech.Controllers
             {
                 using (var requestStream = request.GetRequestStream())
                 {
-                    var buffer = new byte[checked((uint)stream.Length)];
+                    /*
+                    * Read 1024 raw bytes from the input audio file.
+                    */
+                    var buffer = new byte[checked((uint)Math.Min(1024, (int)stream.Length))];
                     var bytesRead = 0;
                     while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) != 0)
                     {
@@ -103,7 +106,7 @@ namespace Rna.Feature.Speech.Controllers
 
             return new JsonResult()
             {
-                Data = new { Success= true}
+                Data = new { Success= true, Transcript = responseString }
             };
         }
     }
