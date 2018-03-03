@@ -128,6 +128,7 @@
     <Compile Include="Routes\RegisterRoutes.cs" />
     <Content Include="App_Config\Include\Feature\Speech.Routes.config" />
     <Content Include="packages.config" />
+    <Content Include="App_Config\Include\Feature\Speech.Microsoft.Speech.Api.config" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="web.config" />
     <None Include="web.Debug.config">
