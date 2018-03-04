@@ -96,9 +96,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Feature\Rna.Feature.Profile\Rna.Feature.Profile.csproj">
-      <Project>{9d8bca7e-f485-405c-947a-770f9b85316c}</Project>
-      <Name>Rna.Feature.Profile</Name>
+    <ProjectReference Include="..\..\Foundation\Rna.Foundation.XConnect\Rna.Foundation.XConnect.csproj">
+      <Project>{607c23ad-7811-4a49-b152-628381fb9c88}</Project>
+      <Name>Rna.Foundation.XConnect</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

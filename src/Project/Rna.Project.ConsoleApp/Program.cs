@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Rna.Feature.Profile;
+using Rna.Foundation.XConnect;
 
 namespace Rna.Project.ConsoleApp
 {
@@ -11,7 +11,10 @@ namespace Rna.Project.ConsoleApp
     {
         static void Main(string[] args)
         {
-            ContactsHelper.AddContactAndProfileScore();
+            var contactIdentifier = Console.ReadLine();
+            var occupation = Console.ReadLine();
+            ExperienceProfileHelper.AddContact(contactIdentifier);
+            ExperienceProfileHelper.AddProfileScore(contactIdentifier, occupation);
             Console.ReadLine();
         }
     }

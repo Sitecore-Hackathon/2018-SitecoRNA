@@ -1,0 +1,10 @@
+﻿@using Sitecore.Mvc
+<div>
+    @using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post))
+    {
+    @Html.Sitecore().FormHandler("Forms", "Submit")
+    <label for="emailAddress">Email Address:</label>
+    <input name="txtEmailAddress" type="email" />
+    <button type="submit">Submit</button>
+    }
+</div>

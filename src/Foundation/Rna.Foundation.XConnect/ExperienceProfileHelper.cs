@@ -1,25 +1,19 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Rna.Foundation.XConnect;
 using Sitecore.XConnect;
 using Sitecore.XConnect.Client;
 using Sitecore.XConnect.Collection.Model;
 
-namespace Rna.Feature.Profile
+namespace Rna.Foundation.XConnect
 {
-    public static class ContactsHelper
+    public static class ExperienceProfileHelper
     {
-        public static void AddContactAndProfileScore()
+        public static void AddContact(string contactIdentifier)
         {
             using (var client = Client.GetClient())
             {
                 var identifiers = new ContactIdentifier[]
                 {
-                    new ContactIdentifier("domain", "hackathon20182.sc", ContactIdentifierType.Known)
+                    new ContactIdentifier("VoiceApp", contactIdentifier, ContactIdentifierType.Known)
                 };
                 var contact = new Contact(identifiers);
 
@@ -30,23 +24,59 @@ namespace Rna.Feature.Profile
                 };
                 client.SetFacet<PersonalInformation>(contact, PersonalInformation.DefaultFacetKey, personalInfoFacet);
 
-                var emailFacet = new EmailAddressList(new EmailAddress("developer1@hackathon2018.com", true), "hackathon");
+                //assuming contact identifier is an email value
+                var emailFacet = new EmailAddressList(new EmailAddress(contactIdentifier, true), "hackathon");
                 client.SetFacet<EmailAddressList>(contact, EmailAddressList.DefaultFacetKey, emailFacet);
-
-                var profileScores = new ProfileScores();
-                profileScores.Scores.Add(ProfileConstants.ProfileKeys.DeveloperKeyId, ProfileConstants.ProfileScores.DeveloperProfileScore);
 
                 client.AddContact(contact);
                 client.Submit();
+            }
+        }
 
-                //direct channel guid {42B67B0E-70BA-4D6F-B9BC-41756A910358}
-                var interaction = new Interaction(contact, InteractionInitiator.Contact, Guid.Parse("{42B67B0E-70BA-4D6F-B9BC-41756A910358}"), "Voice Transcript");
+        public static void AddProfileScore(string contactIdentifier, string occupation)
+        {
+            if (string.IsNullOrEmpty(contactIdentifier))
+            {
+                Console.WriteLine("Unable to find contact with empty identifier");
+                return;
+            }
+
+            using (var client = Client.GetClient())
+            {
+                var contactReference = new IdentifiedContactReference("VoiceApp", contactIdentifier);
+                var contact = client.Get(contactReference, new ExpandOptions() { FacetKeys = { "Personal" } });
+
+                if (contact == null)
+                {
+                    Console.WriteLine("Unable to find contact with identifier:"+ contactIdentifier);
+                }
+
+                var profileScores = new ProfileScores();
+
+                if(occupation.ToLower()==ProfileConstants.ProfileKeys.DeveloperKeyName)
+                    profileScores.Scores.Add(ProfileConstants.ProfileKeys.DeveloperKeyId, ProfileConstants.ProfileScores.DeveloperProfileScore);
+                else if (occupation.ToLower() == ProfileConstants.ProfileKeys.MarketerKeyName)
+                    profileScores.Scores.Add(ProfileConstants.ProfileKeys.MarketerKeyId, ProfileConstants.ProfileScores.MarketerProfileScore);
+                else
+                    profileScores.Scores.Add(ProfileConstants.ProfileKeys.DeveloperKeyId, ProfileConstants.ProfileScores.OtherProfileScore);
+
+                //online channel sitecore/system/Marketing Control Panel/Taxonomies/Channel/Online/Apps/Voice App
+                var interaction = new Interaction(contact, InteractionInitiator.Contact, Guid.Parse("{BB2CBE9B-C9CD-4A75-8069-E4D72652399B}"), "Voice Transcript");
+                // Voice Identification Outcome Guid
+                // sitecore/system/Marketing Control Panel/Outcomes/Voice Identification
+                var voiceIdentificationOutcomeId = Guid.Parse("{4CDA8824-94A3-45B8-BE0B-920497DBA3DA}");
+                var outcome = new Outcome(voiceIdentificationOutcomeId, DateTime.UtcNow, "USD", 50);
+
+                interaction.Events.Add(outcome);
+
+                client.AddInteraction(interaction);
 
                 client.SetProfileScores(interaction, profileScores);
                 client.Submit();
-
             }
         }
+
+        
 
         //private static async void SearchContacts()
         //{
@@ -62,6 +92,7 @@ namespace Rna.Feature.Profile
         //        {
         //            Console.WriteLine($"{contact.Personal().FirstName} {contact.Personal().LastName}");
         //        }
+        //        return contacts.FirstOrDefault();
         //    }
         //}
 

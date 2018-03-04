@@ -1,0 +1,64 @@
+----item----
+version: 1
+id: {E360EDB3-93D0-4774-9216-731F04133FF2}
+database: master
+path: /sitecore/system/Marketing Control Panel/Profiles/Occupation/Pattern Cards/Business User
+parent: {B957A2B0-E2F9-47F3-BC13-FFE2FAC78BB2}
+name: Business User
+master: {00000000-0000-0000-0000-000000000000}
+template: {4A6A7E36-2481-438F-A9BA-0453ECC638FA}
+templatekey: Pattern Card
+created: 20180303T053155Z
+
+----field----
+field: {6DA71AD3-5849-4482-9317-D21390E5A348}
+name: Pattern
+key: pattern
+content-length: 188
+
+<tracking>
+  <profile id="0089b42f-b5db-4557-8d8d-fe931be964d1" name="Visitor">
+    <key name="Developer" value="0" />
+    <key name="Marketer" value="100" />
+  </profile>
+</tracking>
+----version----
+language: en
+version: 1
+revision: 03c1b7e3-5902-44ec-be72-407208fbace0
+
+----field----
+field: {FE732790-2DDB-4657-A882-C2FCE1FBF0C9}
+name: Name
+key: name
+content-length: 13
+
+Business User
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20180303T053155Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+03c1b7e3-5902-44ec-be72-407208fbace0
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20180303T053606Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
