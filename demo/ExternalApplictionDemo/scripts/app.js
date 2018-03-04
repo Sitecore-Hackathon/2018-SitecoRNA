@@ -84,7 +84,7 @@ if (navigator.mediaDevices.getUserMedia) {
       selRecording.appendChild(recordingOption);
 
       audio.controls = true;
-      var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+      var blob = new Blob(chunks, { 'type' : 'audio/wav; codec=audio/pcm' });
       // add the new audio blob to the array
       audioBlobs.push(blob);
 
