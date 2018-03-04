@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using Rna.Foundation.XConnect;
 
 namespace Rna.Feature.Speech.Controllers
 {
@@ -93,6 +94,7 @@ namespace Rna.Feature.Speech.Controllers
                 }
             }
 
+            // TODO: demo fails here because the demo uses an api that isn't passing a properly formatted wav file 
             if (string.IsNullOrEmpty(responseString))
             {
                 return new JsonResult()
@@ -100,9 +102,12 @@ namespace Rna.Feature.Speech.Controllers
                     Data = new { Success = false, ErrorMessage = $"Service call to Microsoft Speech API failed. Response string was null or empty" }
                 };
             }
-            // TODO: call Varun's stuff
 
-
+            ExperienceProfileHelper.AddContact(email);
+            //TODO: get result from response string instead of hardcoding
+            var occupation = "developer"; // responseString....
+            // If you pass "developer", "marketer" or "other" for response string then this will work
+            ExperienceProfileHelper.AddProfileScore(email, occupation);
 
             return new JsonResult()
             {
