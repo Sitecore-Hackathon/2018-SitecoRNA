@@ -104,8 +104,10 @@ namespace Rna.Feature.Speech.Controllers
             }
 
             ExperienceProfileHelper.AddContact(email);
-            //TODO: response string should not be passed - it's json and right now incorrect
-            ExperienceProfileHelper.AddProfileScore(email, responseString);
+            //TODO: get result from response string instead of hardcoding
+            var occupation = "developer"; // responseString....
+            // If you pass "developer", "marketer" or "other" for response string then this will work
+            ExperienceProfileHelper.AddProfileScore(email, occupation);
 
             return new JsonResult()
             {
